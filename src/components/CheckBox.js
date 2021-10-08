@@ -41,7 +41,7 @@ export default function CheckBox({ categories, handleFilters, categoriesDef,upda
                     {categoriesDef?.includes(item) ? null : (
                         <>
                             <Icon.Pencil color="blue" style={{ margin: "auto 10px" }} onClick={() => {
-                                updateCategoryHandler(categoryList?.filter((category) => category?.category == item)[0])
+                                updateCategoryHandler(categoryList?.filter((category) => category?.category === item)[0])
                                 history.push("/addcategory")
                             }} />
                             <Icon.Archive color="red" style={{ margin: "auto 10px" }} onClick={() => {

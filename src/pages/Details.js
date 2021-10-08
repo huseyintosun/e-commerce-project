@@ -8,7 +8,7 @@ function Details({ items,updateProductHandler }) {
     const { id } = useParams()
     const history = useHistory()
 
-    const arrById = items?.filter((item) => item?.id == id)[0];
+    const arrById = items?.filter((item) => item?.id === id)[0];
     return (
         <Card style={{ margin: "20px 10%", width: "80%" }} key={arrById?.id}>
             <Carousel style={{ width: "100%", height: "100%" }} variant="top">

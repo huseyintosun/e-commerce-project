@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AddCategory from '../pages/AddCategory';
 import Details from '../pages/Details'
 import { addNewCategory, addNewProduct, editCategoryHandler, editProductHandler, useFetch } from '../function/function';
+import axios from 'axios';
 
 const initialStateProduct = {
   category: '',
@@ -48,17 +49,23 @@ function AppRouter() {
   const { productList, categoryList } = useFetch();
   const [itemsDef, setItemsDef] = useState()
   const [categoriesDef, setCategoriesDef] = useState()
-  useEffect(async () => {
-    const data = await fetch('https://fakestoreapi.com/products')
-    const result = await data.json()
-    console.log(`result products`, result)
-    setItemsDef(result)
+  const getProducts = () => {
+    axios.get("https://fakestoreapi.com/products").then((response) => {
+      console.log(`response`, response.data)
+      setItemsDef(response.data)
+    })
+  }
+  useEffect(() => {
+    getProducts()
   }, [])
-  useEffect(async () => {
-    const data = await fetch('https://fakestoreapi.com/products/categories')
-    const result = await data.json()
-    console.log(`result categories`, result)
-    setCategoriesDef(result)
+  const getCategories = () => {
+    axios.get('https://fakestoreapi.com/products/categories').then((response) => {
+      console.log(`response`, response.data)
+      setCategoriesDef(response.data)
+    })
+  }
+  useEffect(() => {
+    getCategories()
   }, [])
   const items = itemsDef?.concat(productList)
   const categories = categoriesDef?.concat(categoryList.map((item) => item?.category))
@@ -68,17 +75,17 @@ function AppRouter() {
       <NavbarComp />
       <Switch>
         <Route exact path="/">
-          <Home 
-          items={items} 
-          categories={categories} 
-          categoriesDef={categoriesDef} 
-          updateCategoryHandler={updateCategoryHandler} 
+          <Home
+            items={items}
+            categories={categories}
+            categoriesDef={categoriesDef}
+            updateCategoryHandler={updateCategoryHandler}
           />
         </Route>
         <Route exact path="/details/:id">
-          <Details 
-          items={items} 
-          updateProductHandler={updateProductHandler} 
+          <Details
+            items={items}
+            updateProductHandler={updateProductHandler}
           />
         </Route>
         <Route exact path="/addproduct">
@@ -91,10 +98,10 @@ function AppRouter() {
           />
         </Route>
         <Route exact path="/addcategory">
-          <AddCategory 
-          category={category}
-          setCategory={setCategory}
-          handleCategorySubmit={handleCategorySubmit}
+          <AddCategory
+            category={category}
+            setCategory={setCategory}
+            handleCategorySubmit={handleCategorySubmit}
           />
         </Route>
       </Switch>
