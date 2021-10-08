@@ -8,7 +8,7 @@ function Details({ items,updateProductHandler }) {
     const { id } = useParams()
     const history = useHistory()
 
-    const arrById = items?.filter((item) => item?.id === id)[0];
+    const arrById = items?.filter((item) => item?.id == id)[0];
     return (
         <Card style={{ margin: "20px 10%", width: "80%" }} key={arrById?.id}>
             <Carousel style={{ width: "100%", height: "100%" }} variant="top">
@@ -49,7 +49,7 @@ function Details({ items,updateProductHandler }) {
                 </Card.Text>
                 <Button type="button" onClick={() => history.push("/")} variant="primary">Go to Home</Button>
             </Card.Body>
-            {arrById?.id === parseInt(arrById?.id) ? null : (
+            {arrById?.id == parseInt(arrById?.id) ? null : (
                 <div>
                     <Button style={{ width: "40%", margin: "auto 6%" }} variant="primary" size="sm"
                         onClick={() => {
